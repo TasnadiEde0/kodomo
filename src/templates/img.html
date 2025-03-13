@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/img.css">
+        <script src="/static/img.js"></script>
+        <title>Image</title>
+    </head>
+    <body>
+        <nav id="navbar">
+            <div id="navbar--left">
+                <div class="navbar--button-div"><button id="navbar--logout-button">Logout</button></div>
+                <div class="navbar--button-div"><a href="/index"><button>Home</button></a></div>
+                {% if not is_admin %}
+                    <div class="navbar--button-div"><a href="/statistics"><button>Statistics</button></a></div>
+                {% endif %}
+                <div class="navbar--button-div"><a href="/imgs"><button>Images</button></a></div>
+            </div>
+            <div id="navbar--user">
+                {% if not is_admin %}
+                    <div id="navbar--user__mono">{{ monogram }}</div>
+                {% else %}
+                    <div id="navbar--user__mono">AD</div>
+                {% endif %}
+                <p id="navbar--user__name">{{ username }}</p>
+            </div>
+        </nav>
+
+        <div id="content">
+
+            <img src="{{ img.imagePath }}" alt="Error" width="300"><br>
+
+            <p><b>Ovulation Probability: {{ img.probability }}</b></p><br>
+            <p><b>Date: {{ img.record_time }}</b></p><br>
+
+            <div id="content-delete"><button id="content-delete-button" img_id="{{ img.imageId }}">Delete</button></div>
+
+        </div>
+
+        <footer id="footer">
+            {% if not is_admin %}
+                <div id="footer--del-acc"><button id="footer--del-acc__button">Delete Account</button></div>
+            {% endif %}
+        </footer>
+    </body>
+</html>

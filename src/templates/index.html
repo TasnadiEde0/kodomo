@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="static/index.css">
+        <title>Home</title>
+        <script src="static/index.js"></script>
+    </head>
+    <body>
+        <nav id="navbar">
+            <div id="navbar--left">
+                <div class="navbar--button-div"><button id="navbar--logout-button">Logout</button></div>
+                {% if not is_admin %}
+                    <div class="navbar--button-div"><a href="statistics"><button>Statistics</button></a></div>
+                {% endif %}
+                <div class="navbar--button-div"><a href="imgs"><button>Images</button></a></div>
+                <div class="navbar--button-div"><a href="intervals"><button>Intervals</button></a></div>
+            </div>
+            <div id="navbar--user">
+                {% if not is_admin %}
+                    <div id="navbar--user__mono">{{ monogram }}</div>
+                {% else %}
+                    <div id="navbar--user__mono">AD</div>
+                {% endif %}
+                <p id="navbar--user__name">{{ username }}</p>
+            </div>
+        </nav>
+
+        <div id="content">
+            {% if not is_admin %}
+                <h1>Home</h1>
+                <div id="content--form-container">
+                    <div id="content--img-form-container">
+                        <p class="content--form-paragraph">Upload A Picture</p>
+                        <form id="content--img-form" action="api/images" method="post" enctype="multipart/form-data">
+                            <label for="form--image" id="form--image__label">Image:</label><br>
+                            <input type="file" id="form--image" name="img" accept="image/*" required><br><br>
+                        
+                            <label for="form--date">Image Date:</label><br>
+                            <input type="date" id="form--date" class="form--date" name="date" required><br><br>
+                        
+                            <p id="content--img-form__error"></p>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    
+                    <div id="content--period-form-container">
+                        <p class="content--form-paragraph">Enter Period Dates</p>
+                        <form id="content--period-form" action="api/periods" method="post" enctype="multipart/form-data">
+                            <label for="period-form--start-date">Start Date:</label><br>
+                            <input type="date" id="period-form--start-date" class="form--date" name="startDate" required><br><br>
+
+                            <label for="period-form--end-date">End Date:</label><br>
+                            <input type="date" id="period-form--end-date" class="form--date" name="endDate" required><br><br>
+
+                            <p id="content--period-form__error"></p>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <b><h1>Admin Dashboard</h1></b>
+                <h1>Users</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Type</th>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthdate</th>
+                        <th>Email</th>
+                        <th>Images</th>
+                        <th>Intervals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.userId }}</td>
+                            <td>
+                                {% if user.userTypeId == 1 %}
+                                    Admin
+                                {% else %}
+                                    User
+                                {% endif %}
+                            </td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.birth_date }}</td>
+                            <td>{{ user.email }}</td>
+                            <td><a href="/users/{{ user.userId }}/imgs">Link</a></td>
+                            <td><a href="/users/{{ user.userId }}/intervals">Link</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+        <footer id="footer">
+            {% if not is_admin %}
+                <div id="footer--del-acc"><button id="footer--del-acc__button">Delete Account</button></div>
+            {% endif %}
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Users</title>
+        <script src="static/imgs.js"></script>
+        <link rel="stylesheet" href="static/imgs.css">
+    </head>
+    <body>
+
+        <nav id="navbar">
+            <div id="navbar--left">
+
+                <div class="navbar--button-div"><button id="navbar--logout-button">Logout</button></div>
+                <div class="navbar--button-div"><a href="index"><button>Home</button></a></div>
+            </div>
+            <div id="navbar--user">
+                <div id="navbar--user__mono">AD</div>
+                <p id="navbar--user__name">{{ username }}</p>
+            </div>
+        </nav>
+
+        <div id="content">
+            <h1>Users</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Type</th>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthdate</th>
+                        <th>Email</th>
+                        <th>Images</th>
+                        <th>Intervals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.userId }}</td>
+                            <td>
+                                {% if user.userTypeId == 1 %}
+                                    Admin
+                                {% else %}
+                                    User
+                                {% endif %}
+                            </td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.birth_date }}</td>
+                            <td>{{ user.email }}</td>
+                            <td><a href="/users/{{ user.userId }}/imgs">Link</a></td>
+                            <td><a href="/users/{{ user.userId }}/intervals">Link</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <footer id="footer">
+        </footer>
+        <script>
+            document.getElementById('navbar--logout-button').addEventListener('click', function() {
+                fetch('/logout', {
+                method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                    window.location.href = '/login';
+                    } else {
+                    console.error('Request failed:', response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            window.location.href = '/login';
+            });
+        </script>
+    </body>
+</html>

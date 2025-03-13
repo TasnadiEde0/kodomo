@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Register</title>
+        <script src="static/register.js"></script>
+        <link rel="stylesheet" href="static/register.css">
+    </head>
+    <body>
+        <div id="form-container">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="username">Username</label>
+                <input name="username" id="username" type="text" required>
+
+                <label for="password">Password</label>
+                <input name="password" id="password" type="password" required>
+
+                <label for="password2">Repeat Password</label>
+                <input name="password2" id="password2" type="password" required>
+
+                <label for="first_name">First Name</label>
+                <input name="first_name" id="first_name" type="text">
+
+                <label for="last_name">Last Name</label>
+                <input name="last_name" id="last_name" type="text">
+
+                <label for="birth_date">Birth Date</label>
+                <input name="birth_date" id="birth_date" type="date">
+
+                <label for="address">Address</label>
+                <input name="address" id="address" type="text">
+
+                <label for="post_code">Postal Code</label>
+                <input name="post_code" id="post_code" type="text">
+
+                <label for="email">Email</label>
+                <input name="email" id="email" type="email">
+
+                <input type="submit" value="Register">
+            </form>
+            <a href="/login">Already have an account? Login here</a>
+        </div>
+    </body>
+</html>

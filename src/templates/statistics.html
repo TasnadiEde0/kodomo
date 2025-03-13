@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="static/statistics.css">
+        <title>{{ username }}'s Graph</title>
+        <script src="static/statistics.js"></script>
+
+    </head>
+    <body>
+        <nav id="navbar">
+            <div id="navbar--left">
+                <div class="navbar--button-div"><button id="navbar--logout-button">Logout</button></div>
+                <div class="navbar--button-div"><a href="index"><button>Home</button></a></div>
+            </div>
+            <p class="scrollable-error"></p>
+            <div id="navbar--user">
+                <div id="navbar--user__mono">{{ monogram }}</div>
+                <p id="navbar--user__name">{{ username }}</p>
+            </div>
+        </nav>
+
+        <div id="content">
+            <div class="scrollable" id="scrollable-container">
+                <canvas class="scrollable-canvas"></canvas>
+            </div>
+        </div>
+
+
+        <footer id="footer">
+          <div id="footer--del-acc"><button id="footer--del-acc__button">Delete Account</button></div>
+        </footer>
+    </body>
+</html>

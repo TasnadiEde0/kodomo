@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Images</title>
+        <script src="static/imgs.js"></script>
+        <link rel="stylesheet" href="/static/imgs.css">
+    </head>
+    <body>
+
+        <nav id="navbar">
+            <div id="navbar--left">
+                <div class="navbar--button-div"><button id="navbar--logout-button">Logout</button></div>
+                <div class="navbar--button-div"><a href="/index"><button>Home</button></a></div>
+                {% if not is_admin %}
+                    <div class="navbar--button-div"><a href="/statistics"><button>Statistics</button></a></div>
+                {% endif %}
+            </div>
+            <div id="navbar--user">
+                {% if not is_admin %}
+                    <div id="navbar--user__mono">{{ monogram }}</div>
+                {% else %}
+                    <div id="navbar--user__mono">AD</div>
+                {% endif %}
+                <p id="navbar--user__name">{{ username }}</p>
+            </div>
+        </nav>
+
+        <div id="content">
+            {% if is_admin and page_owner == username %}
+                <h1>Images</h1>
+            {% else %}
+                <h1>{{ page_owner }}'s Images</h1>
+            {% endif %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Date</th>
+                        <th>Probability</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for imger in imgs %}
+                        <tr>
+                            <td><a href="/imgs/{{ imger.imageId }}"><img width="112px" src="{{ imger.imagePath }}"></a></td>
+                            <td>{{ imger.record_time }}</td>
+                            <td>{{ imger.probability }}</td>
+                            <td>
+                                <form action="/api/images/{{ imger.imageId }}" class="deleteForms" method="delete">
+                                    <input type="submit" value="Delete">
+                                </form>
+                                <p id="/api/images/{{ imger.imageId }}"></p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <footer id="footer">
+            {% if not is_admin %}
+                <div id="footer--del-acc"><button id="footer--del-acc__button">Delete Account</button></div>
+            {% endif %}
+        </footer>
+        <script>
+            document.getElementById('navbar--logout-button').addEventListener('click', function() {
+                fetch('/logout', {
+                method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                    window.location.href = '/login';
+                    } else {
+                    console.error('Request failed:', response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            window.location.href = '/login';
+            });
+        </script>
+    </body>
+</html>
